@@ -1,15 +1,10 @@
 package com.demo.crud.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-
-
+import jakarta.persistence.*;
 
 
 @Entity //ini adalah menandakan bahwa ini kelas entites JPA (Model)
+
 public class Buku {
 
     @Id //menandakan ini adalah Primery Key
@@ -17,20 +12,24 @@ public class Buku {
     private Long id;
 
     @Column(nullable = false)
-    private String Nama;
-    private String Judul;
-    private String Penerbit;
+    private String judulBuku;
+    private String penerbitBuku;
     private Integer tahunTerbit;
+    private  String isbn;
+
+    @ManyToOne(fetch = FetchType.LAZY) // Many Buku to One Penulis
+    @JoinColumn(name = "penulis_id", nullable = true) // Ini akan membuat kolom 'penulis_id' sebagai foreign key di tabel 'buku'
+    private Penulis penulis;
 
     public Buku(){
 
     }
 
-    public Buku(String Nama, String Judul, String Penerbit, Integer tahunTerbit){
-        this.Nama = Nama;
-        this.Judul = Judul;
-        this.Penerbit = Penerbit;
+    public Buku(String judulBuku, String penerbitBuku, Integer tahunTerbit, String isbn){
+        this.judulBuku = judulBuku;
+        this.penerbitBuku = penerbitBuku;
         this.tahunTerbit = tahunTerbit;
+        this.isbn = isbn;
     }
 
     public Long getId() {
@@ -41,28 +40,20 @@ public class Buku {
         this.id = id;
     }
 
-    public String getNama() {
-        return Nama;
+    public String getJudulBuku() {
+        return judulBuku;
     }
 
-    public void setNama(String nama) {
-        Nama = nama;
+    public void setJudulBuku(String judulBuku) {
+        this.judulBuku = judulBuku;
     }
 
-    public String getJudul() {
-        return Judul;
+    public String getPenerbitBuku() {
+        return penerbitBuku;
     }
 
-    public void setJudul(String judul) {
-        Judul = judul;
-    }
-
-    public String getPenerbit() {
-        return Penerbit;
-    }
-
-    public void setPenerbit(String penerbit) {
-        Penerbit = penerbit;
+    public void setPenerbitBuku(String penerbitBuku) {
+        this.penerbitBuku = penerbitBuku;
     }
 
     public Integer getTahunTerbit() {
@@ -73,13 +64,33 @@ public class Buku {
         this.tahunTerbit = tahunTerbit;
     }
 
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public Penulis getPenulis() {
+        return penulis;
+    }
+
+    public void setPenulis(Penulis penulis) {
+        this.penulis = penulis;
+    }
+
+
+
+
     @Override
     public String toString() {
         return "Buku {"+
                 "id="+ id +
-                ", Judul ="+ Judul +'\''+
-                ", Nama ="+ Nama +'\''+
-                ",Penerbit"+ Penerbit +'\''+
+                ", Judul ="+ judulBuku +'\''+
+                ", nama_penulis ="+ (penulis != null ? penulis.getNamaPenulis() : "N/A")  +'\''+
+                ",Penerbit"+ penerbitBuku +'\''+
+                "isbn" + isbn + '\''+
                 ", Tahun Terbit"+ tahunTerbit+
                 '}';
     }

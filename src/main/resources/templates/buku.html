@@ -41,8 +41,13 @@
     </thead>
     <tbody>
     <tr th:each="buku : ${listBuku}">
-        <td th:text="${buku.id}"></td> <td th:text="${buku.nama}"></td>
-        <td th:text="${buku.judul}"></td> <td th:text="${buku.penerbit}"></td> <td th:text="${buku.tahunTerbit}"></td>
+        <td th:text="${buku.id}"></td> <td th:text="${buku.judulBuku}"></td>
+
+        <td th:text="${buku.penerbitBuku}"></td>
+        <td></td>
+        </td>
+        <td th:text="${buku.tahunTerbit}"></td>
+        <td th:text="${buku.isbn}"></td>
         <td>
             <a th:href="@{'/edit/' + ${buku.id}}" class="btn btn-warning">Edit</a>
             <a th:href="@{'/delete/' + ${buku.id}}" class="btn btn-danger"

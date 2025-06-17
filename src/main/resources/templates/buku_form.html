@@ -22,23 +22,18 @@
   <input type="hidden" th:field="*{id}" />
 
   <div>
-    <label for="Nama">Nama </label>
-    <input type="text" id="Nama" th:field="*{Nama}" required />
-  </div>
-
-  <div>
-    <label for="Judul">Penulis:</label>
-    <input type="text" id="Judul" th:field="*{Judul}" />
-  </div>
-
-  <div>
-    <label for="Penerbit">Penerbit:</label>
-    <input type="text" id="Penerbit" th:field="*{Penerbit}" />
+    <label for="judulBuku">Judul Buku </label>
+    <input type="text" id="judulBuku" th:field="*{judulBuku}" required />
   </div>
 
   <div>
     <label for="tahunTerbit">Tahun Terbit:</label>
     <input type="number" id="tahunTerbit" th:field="*{tahunTerbit}" />
+  </div>
+
+  <div>
+    <label for="isbn">Isbn</label>
+    <input type="text" id="isbn" th:field="*{isbn}" />
   </div>
 
   <button type="submit" class="btn btn-primary">Simpan</button>
