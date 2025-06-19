@@ -88,10 +88,10 @@ public class Buku {
         return "Buku {"+
                 "id="+ id +
                 ", Judul ="+ judulBuku +'\''+
-                ", nama_penulis ="+ (penulis != null ? penulis.getNamaPenulis() : "N/A")  +'\''+
                 ",Penerbit"+ penerbitBuku +'\''+
-                "isbn" + isbn + '\''+
                 ", Tahun Terbit"+ tahunTerbit+
+                ", nama_penulis ="+ (penulis != null ? penulis.getNamaPenulis() : "N/A")  +'\''+
+                "isbn" + isbn + '\''+
                 '}';
     }
 }

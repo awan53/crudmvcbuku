@@ -32,20 +32,16 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>Nama</th>
-        <th>Judul</th>
-        <th>Penerbit</th>
+        <th>Judul Buku</th>
+        <th>Penerbit Buku</th>
         <th>Tahun Terbit</th>
         <th>Aksi</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="buku : ${listBuku}">
-        <td th:text="${buku.id}"></td>
         <td th:text="${buku.judulBuku}"></td>
         <td th:text="${buku.penerbitBuku}"></td>
-        <td></td>
-        </td>
         <td th:text="${buku.tahunTerbit}"></td>
         <td th:text="${buku.isbn}"></td>
         <td>
