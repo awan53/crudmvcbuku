@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">Tambah/Edit Penulis</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        form { margin-top: 20px; border: 1px solid #ccc; padding: 20px; border-radius: 8px; max-width: 500px; }
+        div { margin-bottom: 10px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"] { width: calc(100% - 22px); padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .btn { display: inline-block; padding: 10px 15px; margin-right: 10px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; }
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+<h1 th:text="${pageTitle}"></h1>
+
+<form th:action="@{/penulis/save}" th:object="${penulis}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <div>
+        <label for="namaPenulis">Nama Penulis:</label>
+        <input type="text" id="namaPenulis" th:field="*{namaPenulis}" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a th:href="@{/penulis}" class="btn btn-secondary">Batal</a>
+</form>
+</body>
+</html>
