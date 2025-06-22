@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +25,25 @@ public class BukuController {
     private PenulisService penulisService;
 
     @GetMapping("/")
-    public String listBuku(Model model){ // Nama method: listBuku (huruf kecil 'l')
-        model.addAttribute("listBuku", bukuService.getAllBuku()); // Nama atribut: listBuku (huruf kecil 'l')
+    public String listBuku(Model model,
+                           @RequestParam(defaultValue = "1") int pageNum, // Halaman default
+                           @RequestParam(defaultValue = "5") int pageSize, // Jumlah item per halaman default
+                           @RequestParam(defaultValue = "id") String sortField, // Kolom default untuk sorting
+                           @RequestParam(defaultValue = "asc") String sortDir){
+        Page<Buku> pageBuku = bukuService.getPaginatedBuku(pageNum, pageSize, sortField, sortDir);
+        List<Buku> listBuku = pageBuku.getContent();
+
+        model.addAttribute("listBuku", listBuku);
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("totalPages", pageBuku.getTotalPages());
+        model.addAttribute("totalItems", pageBuku.getTotalElements());
+        model.addAttribute("pageSize", pageSize); // Tambahkan pageSize ke model
+
+        // Untuk mempertahankan status sorting saat navigasi halaman
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc"); // Untuk toggle sorting
+
         return "buku";
     }
 
@@ -40,7 +58,7 @@ public class BukuController {
         return "buku_form";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/buku/save")
     public String saveBuku(@ModelAttribute("buku") Buku buku, // Perbaikan casing Savebuku -> saveBuku
                            @RequestParam(value = "penulisId", required = false) Long penulisId, RedirectAttributes ra)
     {
@@ -67,7 +85,7 @@ public class BukuController {
         return "redirect:/"; // <-- Mengarahkan ke root URL, yang ditangani oleh listBuku
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/buku/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model, RedirectAttributes ra) {
         try {
             Buku buku = bukuService.getIdBuku(id)
@@ -85,7 +103,7 @@ public class BukuController {
         }
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/buku/delete/{id}")
     public String deleteBuku(@PathVariable("id") Long id, RedirectAttributes ra) {
         try {
             bukuService.getIdBuku(id) // Panggil melalui instance service

@@ -44,8 +44,8 @@
     <td th:text="${penulis.id}"></td>
     <td th:text="${penulis.namaPenulis}"></td>
     <td>
-      <a th:href="@{'/penulis/edit/' + ${penulis.id}}" class="btn btn-warning">Edit</a>
-      <a th:href="@{'/penulis/delete/' + ${penulis.id}}" class="btn btn-danger"
+      <a th:href="@{/penulis/edit/{id}(id=${penulis.id})}" class="btn btn-warning">Edit</a>
+      <a th:href="@{/penulis/delete/{id}(id=${penulis.id})}" class="btn btn-danger"
          onclick="return confirm('Apakah Anda yakin ingin menghapus penulis ini?');">Delete</a>
     </td>
   </tr>
@@ -54,5 +54,29 @@
   </tr>
   </tbody>
 </table>
+
+<div th:if="${totalPages > 0}" class="pagination">
+  Total Items: <span th:text="${totalItems}"></span> | Page <span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span>
+  <br><br>
+  <a th:if="${currentPage > 1}"
+     th:href="@{'/penulis?pageNum=1&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+
+  <a th:if="${currentPage > 1}"
+     th:href="@{'/penulis?pageNum=' + (${currentPage - 1}) + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+
+  <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+        <a th:if="${currentPage != i}"
+           th:href="@{'/penulis?pageNum=' + ${i} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+           th:text="${i}"></a>
+        <a th:if="${currentPage == i}"
+           class="active" th:text="${i}"></a>
+    </span>
+
+  <a th:if="${currentPage < totalPages}"
+     th:href="@{'/penulis?pageNum=' + (${currentPage + 1}) + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+
+  <a th:if="${currentPage < totalPages}"
+     th:href="@{'/penulis?pageNum=' + ${totalPages} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+</div>
 </body>
 </html>

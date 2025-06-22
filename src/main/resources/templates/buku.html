@@ -51,8 +51,8 @@
         <td th:text="${buku.isbn}"></td>
         <td th:text="${buku.penulis != null ? buku.penulis.namaPenulis : 'N/A'}">Nama Penulis</td>
         <td>
-            <a th:href="@{'/edit/' + ${buku.id}}" class="btn btn-warning">Edit</a>
-            <a th:href="@{'/delete/' + ${buku.id}}" class="btn btn-danger"
+            <a th:href="@{/buku/edit/{id}(id=${buku.id})}" class="btn btn-warning">Edit</a>
+            <a th:href="@{/buku/delete/{id}(id=${buku.id})}" class="btn btn-danger"
                onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?');">Delete</a>
         </td>
     </tr>
@@ -61,5 +61,29 @@
     </tr>
     </tbody>
 </table>
+
+<div th:if="${totalPages > 0}" class="pagination">
+    Total Items: <span th:text="${totalItems}"></span> | Page <span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span>
+    <br><br>
+    <a th:if="${currentPage > 1}"
+       th:href="@{'/?pageNum=1&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+
+    <a th:if="${currentPage > 1}"
+       th:href="@{'/?pageNum=' + ${currentPage - 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+
+    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+        <a th:if="${currentPage != i}"
+           th:href="@{'/?pageNum=' + ${i} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+           th:text="${i}"></a>
+        <a th:if="${currentPage == i}"
+           class="active" th:text="${i}"></a>
+    </span>
+
+    <a th:if="${currentPage < totalPages}"
+       th:href="@{'/?pageNum=' + ${currentPage + 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+
+    <a th:if="${currentPage < totalPages}"
+       th:href="@{'/?pageNum=' + ${totalPages} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+</div>
 </body>
 </html>
