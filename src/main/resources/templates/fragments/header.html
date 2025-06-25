@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header_content">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} ?: 'Aplikasi Buku'"></title> <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #333; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+    .message { background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; border: 1px solid #c3e6cb; border-radius: 5px; }
+    .error-message { background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 15px; border: 1px solid #f5c6cb; border-radius: 5px; }
+    .btn { display: inline-block; padding: 8px 12px; margin: 5px 0; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; }
+    .btn-primary { background-color: #007bff; color: white; }
+    .btn-warning { background-color: #ffc107; color: #212529; }
+    .btn-danger { background-color: #dc3545; color: white; }
+
+
+     /* --- Perubahan Kunci di sini: Gaya untuk link navigasi aktif --- */
+    .navbar-dark .navbar-nav .nav-link.active {
+        color: #ffffff !important; /* Warna putih agar kontras dengan background gelap */
+        font-weight: bold; /* Opsional: membuat teks lebih tebal */
+    }
+
+     /* Styling Paginasi */
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .pagination a {
+        display: inline-block;
+        padding: 6px 12px;
+        margin: 0 4px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #007bff;
+        background-color: #fff;
+    }
+    .pagination a:hover {
+        background-color: #e9ecef;
+    }
+    .pagination a.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    /* Opsional: Untuk warna hover pada link aktif */
+     .navbar-dark .navbar-nav .nav-link.active {
+            color: #ffffff !important;
+            font-weight: bold;
+        }
+    .navbar-dark .navbar-nav .nav-link.active:hover {
+        color: #eeeeee !important; /* Warna sedikit abu-abu saat di-hover */
+    }
+
+    /* Opsional: Untuk warna fokus/saat diklik pada link aktif */
+    .navbar-dark .navbar-nav .nav-link.active:focus {
+        color: #ffffff !important;
+    }
+
+
+
+
+</style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body>
+    </body>
+</html>

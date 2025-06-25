@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container-fluid p-0">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm" th:fragment="navbar">
+    <div class="container">
+      <a class="navbar-brand" th:href="@{/}">Aplikasi Buku</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${currentPageUri == '/' or currentPageUri == '/buku' ? 'active' : ''}" th:href="@{/}">Daftar Buku</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${currentPageUri == '/buku_form' ? 'active' : ''}" th:href="@{/buku_form}">Tambah Buku</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${currentPageUri == '/penulis' ? 'active' : ''}" th:href="@{/penulis}">Daftar Penulis</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Lebih Lanjut
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Tentang</a></li>
+              <li><a class="dropdown-item" href="#">Kontak</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+</body>
+</html>

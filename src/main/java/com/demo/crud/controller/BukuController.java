@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Page;
 
@@ -24,12 +25,13 @@ public class BukuController {
     @Autowired
     private PenulisService penulisService;
 
-    @GetMapping("/")
+    @GetMapping({"/", "/buku"})
     public String listBuku(Model model,
                            @RequestParam(defaultValue = "1") int pageNum, // Halaman default
                            @RequestParam(defaultValue = "5") int pageSize, // Jumlah item per halaman default
                            @RequestParam(defaultValue = "id") String sortField, // Kolom default untuk sorting
-                           @RequestParam(defaultValue = "asc") String sortDir){
+                           @RequestParam(defaultValue = "asc") String sortDir,
+                           HttpServletRequest request){
         Page<Buku> pageBuku = bukuService.getPaginatedBuku(pageNum, pageSize, sortField, sortDir);
         List<Buku> listBuku = pageBuku.getContent();
 
@@ -44,17 +46,22 @@ public class BukuController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc"); // Untuk toggle sorting
 
+        model.addAttribute("currentPageUri", request.getRequestURI());
+        model.addAttribute("pageTitle", "Daftar Buku");
         return "buku";
     }
 
     @GetMapping("/buku_form")
-    public String tambahBukuForm(Model model)
+    public String tambahBukuForm(Model model, HttpServletRequest request)
     {
         model.addAttribute("buku", new Buku());
         model.addAttribute("pageTitle", "Tambah Buku baru");
 
         List<Penulis> penulisList = penulisService.getAllPenulis();
         model.addAttribute("listPenulis", penulisList);
+        model.addAttribute("currentPageUri", request.getRequestURI());
+        model.addAttribute("pageTitle", "Daftar Penulis");
+
         return "buku_form";
     }
 
@@ -86,7 +93,7 @@ public class BukuController {
     }
 
     @GetMapping("/buku/edit/{id}")
-    public String showEditForm(@PathVariable("id") Long id, Model model, RedirectAttributes ra) {
+    public String showEditForm(@PathVariable("id") Long id, Model model, RedirectAttributes ra, HttpServletRequest request) {
         try {
             Buku buku = bukuService.getIdBuku(id)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid buku Id :" + id));
@@ -95,6 +102,8 @@ public class BukuController {
 
             List<Penulis> penulisList = penulisService.getAllPenulis();
             model.addAttribute("listPenulis", penulisList);
+            model.addAttribute("currentPageUri", request.getRequestURI());
+
 
             return "buku_form"; // INI SUDAH BENAR: mengarahkan ke form edit
         } catch (IllegalArgumentException e) {
