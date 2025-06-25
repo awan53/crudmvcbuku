@@ -22,19 +22,17 @@
 
   <a th:href="@{/penulis/new}" class="btn btn-primary">Tambah Penulis Baru</a>
 
-  <a th:href="@{/}" class="btn btn-primary">Kembali ke halaman Buku</a>
-
   <table border="1">
     <thead>
     <tr>
-      <th>ID</th>
+      <th>No</th>
       <th>Nama Penulis</th>
       <th>Aksi</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="penulis : ${listPenulis}">
-      <td th:text="${penulis.id}"></td>
+    <tr th:each="penulis, interStat : ${listPenulis}">
+      <td th:text="${interStat.count}"></td>
       <td th:text="${penulis.namaPenulis}"></td>
       <td>
         <a th:href="@{/penulis/edit/{id}(id=${penulis.id})}" class="btn btn-warning">Edit</a>

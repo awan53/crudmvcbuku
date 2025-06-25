@@ -64,7 +64,7 @@ public class PenulisController {
                         return new IllegalArgumentException("Invalid penulis Id:" + id);
                     });
             model.addAttribute("penulis", penulis);
-            model.addAttribute("pageTitle", "Edit Penulis (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit Penulis");
             return "penulis_form";
         } catch (IllegalArgumentException e) {
             ra.addFlashAttribute("error-message", e.getMessage());

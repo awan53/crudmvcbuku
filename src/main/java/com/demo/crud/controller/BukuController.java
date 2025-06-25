@@ -98,7 +98,7 @@ public class BukuController {
             Buku buku = bukuService.getIdBuku(id)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid buku Id :" + id));
             model.addAttribute("buku", buku);
-            model.addAttribute("pageTitle", "Edit buku (ID : " + id + ")");
+            model.addAttribute("pageTitle", "Edit buku");
 
             List<Penulis> penulisList = penulisService.getAllPenulis();
             model.addAttribute("listPenulis", penulisList);

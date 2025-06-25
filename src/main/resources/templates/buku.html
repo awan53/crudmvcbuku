@@ -19,13 +19,11 @@
 
         <a th:href="@{/buku_form}" class="btn btn-primary">Tambah Buku Baru</a>
 
-        <a th:href="@{/penulis}" class="btn btn-primary">Ke halaman Penulis</a>
-
 
         <table border="1">
             <thead>
             <tr>
-                <th>ID</th>
+                <th>No</th>
                 <th>Judul Buku</th>
                 <th>Penerbit Buku</th>
                 <th>Tahun Terbit</th>
@@ -35,8 +33,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="buku : ${listBuku}">
-                <td th:text="${buku.id}"></td>
+            <tr th:each="buku, interStat : ${listBuku}">
+                <td th:text="${interStat.count}"></td>
                 <td th:text="${buku.judulBuku}"></td>
                 <td th:text="${buku.penerbitBuku}"></td>
                 <td th:text="${buku.tahunTerbit}"></td>
