@@ -1,0 +1,3 @@
+2025-06-28 18:01:44.452911+07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM PENULIS ANGGOTA [*]PENULIS"; SQL statement:
+SELECT * FROM PENULIS ANGGOTA PENULIS [42000-224]

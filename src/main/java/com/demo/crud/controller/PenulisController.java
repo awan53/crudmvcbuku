@@ -4,7 +4,10 @@ import com.demo.crud.model.Penulis;
 import com.demo.crud.service.PenulisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,7 +28,17 @@ public class PenulisController {
                               @RequestParam(defaultValue = "id") String sortField,
                               @RequestParam(defaultValue = "asc") String sortDir) {
 
-        Page<Penulis> pagePenulis = penulisService.getPaginatedPenulis(pageNum, pageSize, sortField, sortDir);
+        int actualPageNum = pageNum - 1;
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+
+        org.springframework.data.domain.Pageable pageable = PageRequest.of(actualPageNum, pageSize, sort);
+
+
+        Page<Penulis> pagePenulis = penulisService.getPaginatedPenulis(pageable);
+
         List<Penulis> listPenulis = pagePenulis.getContent();
 
         model.addAttribute("listPenulis", listPenulis);

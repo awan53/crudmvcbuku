@@ -17,20 +17,16 @@ import java.util.Optional;
 @Service
 public class BukuService {
     @Autowired
-    private BookRepository bookRepository;
+    private BookRepository bookRepository; // Perhatikan nama variabelnya 'bookRepository'
 
     public List<Buku> getAllBuku()
     {
         return bookRepository.findAll();
     }
 
-    public Page<Buku> getPaginatedBuku(int pageNum, int pageSize, String sortField, String sortDir)
-    {
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-                Sort.by(sortField).ascending():
-                Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNum -1, pageSize, sort);
-        return bookRepository.findAll(pageable);
+    // Ini adalah satu-satunya method getPaginatedBuku yang benar
+    public Page<Buku> getPaginatedBuku(Pageable pageable) { // Menerima objek Pageable
+        return bookRepository.findAll(pageable); // Memanggil method findAll dari JpaRepository
     }
 
     public Optional<Buku> getIdBuku(Long id)
@@ -45,6 +41,6 @@ public class BukuService {
 
     public void deleteBuku(Long id)
     {
-         bookRepository.deleteById(id);
+        bookRepository.deleteById(id);
     }
 }

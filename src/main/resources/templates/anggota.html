@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="~{fragments/header :: header_content}"></head>
+    <title th:text="${pageTitle} ?: 'Daftar Anggota'"></title>
+    <style>
+        /* CSS Tambahan untuk paginasi jika belum ada di header_content atau CSS eksternal Anda */
+        .pagination {
+            margin-top: 20px;
+        }
+        .pagination a {
+            color: dodgerblue;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+        }
+        .pagination a.active {
+            background-color: dodgerblue;
+            color: white;
+            border: 1px solid dodgerblue;
+        }
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error-message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid p-0">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+</div>
+<div class="container mt-4">
+
+    <h1 class="text-center" th:text="${pageTitle}">Daftar Anggota</h1>
+
+    <div th:if="${message}" class="message">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${errorMessage}" class="error-message"> <p th:text="${errorMessage}"></p>
+    </div>
+
+    <a th:href="@{/anggota/new}" class="btn btn-primary mb-3">Tambah Anggota Baru</a>
+
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+        <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">
+                Nama Anggota
+            </th>
+            <th class="text-center">
+               email
+            </th>
+            <th class="text-center">Nomor Telepon</th>
+            <th class="text-center">Alamat</th>
+            <th class="text-center">Tanggal Daftar</th>
+            <th class="text-center">Aksi</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="anggota, interStat : ${listAnggota}">
+            <td class="text-center">
+                <span th:text="${(currentPage - 1) * pageSize + interStat.count}"></span>
+            </td>
+            <td th:text="${anggota.namaAnggota}"></td>
+            <td th:text="${anggota.email}"></td>
+            <td th:text="${anggota.no_Telephone}"></td>
+            <td th:text="${anggota.alamat}"></td>
+            <td th:text="${anggota.tanggalDaftar}"></td>
+            <td class="text-center">
+                <a th:href="@{/anggota/edit/{id}(id=${anggota.id})}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{/anggota/delete/{id}(id=${anggota.id})}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Apakah Anda yakin ingin menghapus anggota ini?');">Delete</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(listAnggota)}">
+            <td colspan="7" class="text-center">Belum ada anggota dalam daftar.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${totalPages > 0}" class="pagination">
+        Total Items: <span th:text="${totalItems}"></span> | Page <span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span>
+        <br><br>
+        <a th:if="${currentPage > 1}"
+           th:href="@{|${currentPageUri}?pageNum=1&pageSize=${pageSize}&sortField=${sortField}&sortDir=${sortDir}|}">First</a>
+
+        <a th:if="${currentPage > 1}"
+           th:href="@{|${currentPageUri}?pageNum=${currentPage - 1}&pageSize=${pageSize}&sortField=${sortField}&sortDir=${sortDir}|}">Previous</a>
+
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                <a th:if="${currentPage != i}"
+                   th:href="@{|${currentPageUri}?pageNum=${i}&pageSize=${pageSize}&sortField=${sortField}&sortDir=${sortDir}|}"
+                   th:text="${i}"></a>
+                <a th:if="${currentPage == i}"
+                   class="active" th:text="${i}"></a>
+            </span>
+
+        <a th:if="${currentPage < totalPages}"
+           th:href="@{|${currentPageUri}?pageNum=${currentPage + 1}&pageSize=${pageSize}&sortField=${sortField}&sortDir=${sortDir}|}">Next</a>
+
+        <a th:if="${currentPage < totalPages}"
+           th:href="@{|${currentPageUri}?pageNum=${totalPages}&pageSize=${pageSize}&sortField=${sortField}&sortDir=${sortDir}|}">Last</a>
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

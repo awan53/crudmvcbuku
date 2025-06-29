@@ -5,12 +5,16 @@ import com.demo.crud.model.Penulis;
 import com.demo.crud.service.BukuService; // Import BukuService
 import com.demo.crud.service.PenulisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Page;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -32,11 +36,22 @@ public class BukuController {
                            @RequestParam(defaultValue = "id") String sortField, // Kolom default untuk sorting
                            @RequestParam(defaultValue = "asc") String sortDir,
                            HttpServletRequest request){
-        Page<Buku> pageBuku = bukuService.getPaginatedBuku(pageNum, pageSize, sortField, sortDir);
+
+        int actualPagenum = pageNum -1; // pageNum dari request (1-based), dikonversi ke 0-based
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+
+        // Buat objek Pageable
+        org.springframework.data.domain.Pageable pageable = PageRequest.of(actualPagenum, pageSize, sort);
+
+        // Panggil service DENGAN objek Pageable
+        // Ini adalah bagian penting yang berubah!
+        Page<Buku> pageBuku = bukuService.getPaginatedBuku(pageable); // <-- Ubah baris ini!
         List<Buku> listBuku = pageBuku.getContent();
 
         model.addAttribute("listBuku", listBuku);
-        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("currentPage", pageNum); // Kirim pageNum (1-based) ke Thymeleaf
         model.addAttribute("totalPages", pageBuku.getTotalPages());
         model.addAttribute("totalItems", pageBuku.getTotalElements());
         model.addAttribute("pageSize", pageSize); // Tambahkan pageSize ke model

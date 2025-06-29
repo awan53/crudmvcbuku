@@ -10,7 +10,7 @@
     </div>
     <div class="container mt-4">
 
-        <h1>Daftar Buku</h1>
+        <h1 class="text-center">Daftar Buku</h1>
 
         <div th:if="${message}" class="message">
             <p th:text="${message}"></p>
@@ -20,8 +20,8 @@
         <a th:href="@{/buku_form}" class="btn btn-primary">Tambah Buku Baru</a>
 
 
-        <table border="1">
-            <thead>
+        <table border="1" class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
             <tr>
                 <th>No</th>
                 <th>Judul Buku</th>
@@ -32,15 +32,17 @@
                 <th>Aksi</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="buku, interStat : ${listBuku}">
-                <td th:text="${interStat.count}"></td>
-                <td th:text="${buku.judulBuku}"></td>
-                <td th:text="${buku.penerbitBuku}"></td>
-                <td th:text="${buku.tahunTerbit}"></td>
-                <td th:text="${buku.isbn}"></td>
-                <td th:text="${buku.penulis != null ? buku.penulis.namaPenulis : 'N/A'}">Nama Penulis</td>
+            <tbody >
+            <tr th:each="buku, interStat : ${listBuku}" class="text-center">
                 <td>
+                    <span th:text="${(currentPage - 1) * pageSize + interStat.count}" class="text-center"></span>
+                </td>
+                <td th:text="${buku.judulBuku}" class="text-center"></td>
+                <td th:text="${buku.penerbitBuku}" class="text-center"></td>
+                <td th:text="${buku.tahunTerbit}" class="text-center"></td>
+                <td th:text="${buku.isbn}" class="text-center"></td>
+                <td th:text="${buku.penulis != null ? buku.penulis.namaPenulis : 'N/A'}" class="text-center">Nama Penulis</td>
+                <td class="text-center" >
                     <a th:href="@{/buku/edit/{id}(id=${buku.id})}" class="btn btn-warning">Edit</a>
                     <a th:href="@{/buku/delete/{id}(id=${buku.id})}" class="btn btn-danger"
                        onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?');">Delete</a>
@@ -56,24 +58,24 @@
             Total Items: <span th:text="${totalItems}"></span> | Page <span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span>
             <br><br>
             <a th:if="${currentPage > 1}"
-               th:href="@{'/?pageNum=1&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+               th:href="@{'/buku?pageNum=1&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
 
             <a th:if="${currentPage > 1}"
-               th:href="@{'/?pageNum=' + ${currentPage - 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+               th:href="@{'/buku?pageNum=' + ${currentPage - 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
 
             <span th:each="i : ${#numbers.sequence(1, totalPages)}">
         <a th:if="${currentPage != i}"
-           th:href="@{'/?pageNum=' + ${i} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+           th:href="@{'/buku?pageNum=' + ${i} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
            th:text="${i}"></a>
         <a th:if="${currentPage == i}"
            class="active" th:text="${i}"></a>
     </span>
 
             <a th:if="${currentPage < totalPages}"
-               th:href="@{'/?pageNum=' + ${currentPage + 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+               th:href="@{'/buku?pageNum=' + ${currentPage + 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
 
             <a th:if="${currentPage < totalPages}"
-               th:href="@{'/?pageNum=' + ${totalPages} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+               th:href="@{'/buku?pageNum=' + ${totalPages} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
         </div>
 
     </div>
