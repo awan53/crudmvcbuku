@@ -22,15 +22,18 @@
           <li class="nav-item">
             <a class="nav-link" th:classappend="${currentPageUri == '/peminjaman' ? 'active' : ''}" th:href="@{/peminjaman}">Peminjaman Buku</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Lebih Lanjut
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Tentang</a></li>
-              <li><a class="dropdown-item" href="#">Kontak</a></li>
-            </ul>
-          </li>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-link nav-link" style="color: inherit; text-decoration: none;">Logout</button>
+              </form>
+            </li>
+          </ul>
+
+          <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+            <input type="submit" value="Logout">
+          </form>
+          <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-danger">Logout</a>
         </ul>
       </div>
     </div>
