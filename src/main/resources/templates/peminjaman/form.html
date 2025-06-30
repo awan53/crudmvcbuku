@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html  lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:temporals="http://www.thymeleaf.org/extras/thymeleaf-extras-java8time">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
 
         <div class="mb-3">
             <label for="anggota" class="form-label">Anggota:</label>
-            <select id="anggota" th:field="*{anggota.id}" class="form-control" required>
+            <select id="anggota" th:field="*{anggota}" class="form-control" required>
                 <option value="">-- Pilih Anggota --</option>
                 <option th:each="anggota : ${anggotaList}"
                         th:value="${anggota.id}"
@@ -33,7 +33,7 @@
 
         <div class="mb-3">
             <label for="buku" class="form-label">Buku:</label>
-            <select id="buku" th:field="*{buku.id}" class="form-control" required>
+            <select id="buku" th:field="*{buku}" class="form-control" required>
                 <option value="">-- Pilih Buku --</option>
                 <option th:each="buku : ${bukuList}"
                         th:value="${buku.id}"
@@ -43,14 +43,29 @@
             </select>
         </div>
 
+<!--        <div class="mb-3">-->
+<!--            <label for="tanggalPeminjaman" class="form-label">Tanggal Peminjaman :</label>-->
+<!--            <input type="date" id="tanggalPeminjaman" th:field="*{tanggalPeminjaman}" class="form-control" required>-->
+<!--        </div>-->
+
+<!--        <div class="mb-3">-->
+<!--            <label for="tanggalPengembalian" class="form-label">Tanggal Pengembalian :</label>-->
+<!--            <input type="date" id="tanggalPengembalian" th:field="*{tanggalPengembalian}" class="form-control">-->
+<!--            <small class="form-text text-muted">Kosongkan jika buku belum dikembalikan.</small>-->
+<!--        </div>-->
+
         <div class="mb-3">
-            <label for="tanggalPeminjaman" class="form-label">Tanggal Peminjaman:</label>
-            <input type="date" id="tanggalPeminjaman" th:field="*{tanggalPeminjaman}" class="form-control" required />
+            <label for="tanggalPeminjaman" class="form-label">Tanggal Peminjaman :</label>
+            <input type="date" id="tanggalPeminjaman" name="tanggalPeminjaman"
+                   th:value="${peminjaman.tanggalPeminjaman != null ? #temporals.format(peminjaman.tanggalPeminjaman, 'yyyy-MM-dd') : ''}"
+                   class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="tanggalPengembalian" class="form-label">Tanggal Pengembalian:</label>
-            <input type="date" id="tanggalPengembalian" th:field="*{tanggalPengembalian}" class="form-control" />
+            <label for="tanggalPengembalian" class="form-label">Tanggal Pengembalian :</label>
+            <input type="date" id="tanggalPengembalian" name="tanggalPengembalian"
+                   th:value="${peminjaman.tanggalPengembalian != null ? #temporals.format(peminjaman.tanggalPengembalian, 'yyyy-MM-dd') : ''}"
+                   class="form-control">
             <small class="form-text text-muted">Kosongkan jika buku belum dikembalikan.</small>
         </div>
 
@@ -59,6 +74,6 @@
     </form>
 </div>
 
-<div th:replace="~{fragments/footer :: footer_content}"></div>
+<div th:replace="~{fragments/footer}"></div>
 </body>
 </html>
