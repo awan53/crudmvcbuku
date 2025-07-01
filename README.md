@@ -20,10 +20,3 @@ A simple web-based Library Management System built with Spring Boot, Bootstrap, 
 ![image](https://github.com/user-attachments/assets/626b14c4-33c6-4dfc-b1a3-c2019064b5cd)
 
 ![image](https://github.com/user-attachments/assets/2dd061ae-8463-401e-8d4e-20bc1d75e43c)
-
-
-
-
-
-## 🚀 How to Run
-1. Clone the repo:
